@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
-const WelcomeApp = ({errorCount}) => {
+const WelcomeScreen = ({errorCount}) => {
   return (
     <section className="welcome">
       <div className="welcome__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83" /></div>
@@ -17,4 +17,8 @@ const WelcomeApp = ({errorCount}) => {
   );
 };
 
-export default WelcomeApp;
+WelcomeScreen.propTypes = {
+  errorCount: PropTypes.number.isRequired,
+};
+
+export default WelcomeScreen;
