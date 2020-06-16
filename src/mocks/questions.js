@@ -1,10 +1,6 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import App from './app.jsx';
+const AVATAR_URL = `https://picsum.photos/134`;
 
-const errorCount = 3;
-
-const questions = [
+export default [
   {
     type: `genre`,
     genre: `rock`,
@@ -35,25 +31,17 @@ const questions = [
     },
     answers: [
       {
-        picture: `http://placekitten.com/134/134`,
-        artist: `Singer 1`,
-      }, {
-        picture: `http://placekitten.com/134/134`,
-        artist: `Singer 2`,
-      }, {
-        picture: `http://placekitten.com/134/134`,
-        artist: `Singer 3`,
-      }
-    ],
+        picture: AVATAR_URL,
+        artist: `Sum 41`,
+      },
+      {
+        picture: AVATAR_URL,
+        artist: `Blink 182`,
+      },
+      {
+        picture: AVATAR_URL,
+        artist: `Green Day`,
+      },
+    ]
   }
 ];
-
-describe(`AppSnapshots`, () => {
-  it(`should render App`, () => {
-    const tree = renderer.create(
-        <App errorCount={errorCount} questions={questions} />
-    ).toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
-});
