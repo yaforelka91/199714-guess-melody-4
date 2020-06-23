@@ -31,6 +31,7 @@ describe(`GenreQuestionScreenSnapshots`, () => {
         <GenreQuestionScreen
           question={question}
           onAnswer={() => {}}
+          renderPlayer={() => {}}
         />
     ).toJSON();
 

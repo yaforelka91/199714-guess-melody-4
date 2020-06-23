@@ -43,6 +43,7 @@ describe(`GenreQuestionScreenE2E`, () => {
         <GenreQuestionScreen
           onAnswer={onAnswer}
           question={question}
+          renderPlayer={() => {}}
         />
     );
 
