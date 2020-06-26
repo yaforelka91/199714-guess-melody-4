@@ -45,6 +45,7 @@ describe(`ArtistQuestionScreenE2E`, () => {
         <ArtistQuestionScreen
           onAnswer={onAnswer}
           question={question}
+          renderPlayer={() => {}}
         />
     );
 
