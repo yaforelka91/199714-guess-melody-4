@@ -109,7 +109,7 @@ describe(`Reducer works correctly`, () => {
 
 
 describe(`Action creators work correctly`, () => {
-  it(`Action creator for incrementing step returns correct action`, () => {
+  it(`Action creator for incrementing step returns action that increments step`, () => {
     expect(ActionCreator.incrementStep()).toEqual({
       type: ActionType.INCREMENT_STEP,
       payload: 1,
