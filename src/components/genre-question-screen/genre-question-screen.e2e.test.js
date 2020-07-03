@@ -1,5 +1,5 @@
 import React from 'react';
-import Enzyme, {shallow} from 'enzyme';
+import Enzyme, {mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import GenreQuestionScreen from './genre-question-screen.jsx';
 
@@ -36,14 +36,16 @@ const mockEvent = {
 
 describe(`GenreQuestionScreenE2E`, () => {
   it(`Check data-format in callback after user's answer`, () => {
-    const onAnswer = jest.fn((...args) => [...args]);
+    const onAnswer = jest.fn();
     const userAnswer = [true, false, false, false];
 
-    const genreQuestion = shallow(
+    const genreQuestion = mount(
         <GenreQuestionScreen
           onAnswer={onAnswer}
+          onChange={() => {}}
           question={question}
           renderPlayer={() => {}}
+          userAnswers={userAnswer}
         />
     );
 
@@ -54,9 +56,11 @@ describe(`GenreQuestionScreenE2E`, () => {
     form.simulate(`submit`, mockEvent);
 
     expect(onAnswer).toHaveBeenCalledTimes(1);
-    expect(onAnswer.mock.calls[0][0]).toMatchObject(question);
-    expect(onAnswer.mock.calls[0][1]).toMatchObject(userAnswer);
 
-    expect(genreQuestion.find(`input`).map((item) => item.prop(`checked`))).toEqual(userAnswer);
+    expect(onAnswer.mock.calls[0][0]).toEqual(void 0);
+
+    expect(
+        genreQuestion.find(`input`).map((item) => item.prop(`checked`))
+    ).toEqual(userAnswer);
   });
 });
