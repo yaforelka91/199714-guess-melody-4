@@ -24,17 +24,17 @@ const MockComponentWrapped = withAudio(MockComponent);
 
 describe(`withAudioSnapshot`, ()=>{
   it(`should render withAudio`, () => {
-    const tree = renderer.create((
-      <MockComponentWrapped
-        isPlaying={false}
-        onPlayButtonClick={() => {}}
-        src={``}
-      />
-    ), {
-      createNodeMock() {
-        return {};
-      }
-    }).toJSON();
+    const tree = renderer.create(
+        <MockComponentWrapped
+          isPlaying={false}
+          onPlayButtonClick={() => {}}
+          src={``}
+        />, {
+          createNodeMock() {
+            return {};
+          }
+        }
+    ).toJSON();
 
     expect(tree).toMatchSnapshot();
   });

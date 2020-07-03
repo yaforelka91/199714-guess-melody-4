@@ -17,7 +17,6 @@ const GenreQuestionScreenWrapped = withActivePlayer(withUserAnswer(GenreQuestion
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 
 class App extends PureComponent {
-
   _renderGameScreen() {
     const {
       maxMistakes,

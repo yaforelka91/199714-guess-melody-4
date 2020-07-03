@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const WinScreen = (props) => {
-  const {questionsCount, mistakesCount, onReplayButtonClick} = props;
+const WinScreen = ({questionsCount, mistakesCount, onReplayButtonClick}) => {
   const correctlyQuestionsCount = questionsCount - mistakesCount;
 
   return (
