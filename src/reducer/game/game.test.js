@@ -1,48 +1,4 @@
-import {reducer, ActionCreator, ActionType} from './reducer.js';
-
-const questions = [
-  {
-    type: `genre`,
-    genre: `rock`,
-    answers: [
-      {
-        src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
-        genre: `jazz`,
-      },
-      {
-        src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
-        genre: `rock`,
-      },
-      {
-        src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
-        genre: `pop`,
-      },
-      {
-        src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
-        genre: `rock`,
-      }
-    ]
-  },
-  {
-    type: `artist`,
-    song: {
-      src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
-      artist: `Blink 182`,
-    },
-    answers: [
-      {
-        picture: `https://picsum.photos/134`,
-        artist: `Sum 41`,
-      }, {
-        picture: `https://picsum.photos/134`,
-        artist: `Blink 182`,
-      }, {
-        picture: `https://picsum.photos/134`,
-        artist: `Green Day`,
-      }
-    ],
-  }
-];
+import {reducer, ActionCreator, ActionType} from './game.js';
 
 describe(`Reducer works correctly`, () => {
   it(`Reducer without additional parameters should return initialState`, () => {
@@ -50,7 +6,6 @@ describe(`Reducer works correctly`, () => {
       step: -1,
       mistakes: 0,
       maxMistakes: 3,
-      questions,
     });
   });
 
@@ -58,27 +13,23 @@ describe(`Reducer works correctly`, () => {
     expect(reducer({
       step: -1,
       mistakes: 0,
-      questions,
     }, {
       type: ActionType.INCREMENT_STEP,
       payload: 1,
     })).toEqual({
       step: 0,
       mistakes: 0,
-      questions,
     });
 
     expect(reducer({
       step: -1,
       mistakes: 0,
-      questions,
     }, {
       type: ActionType.INCREMENT_STEP,
       payload: 0,
     })).toEqual({
       step: -1,
       mistakes: 0,
-      questions,
     });
   });
 
@@ -117,7 +68,6 @@ describe(`Reducer works correctly`, () => {
       step: 0,
       mistakes: 0,
       maxMistakes: 3,
-      questions,
     });
 
     expect(reducer({
@@ -130,7 +80,6 @@ describe(`Reducer works correctly`, () => {
       step: 0,
       mistakes: 0,
       maxMistakes: 3,
-      questions,
     });
 
     expect(reducer({
@@ -143,7 +92,6 @@ describe(`Reducer works correctly`, () => {
       step: 0,
       mistakes: 0,
       maxMistakes: 3,
-      questions,
     });
   });
 });

@@ -25,6 +25,7 @@ const withActivePlayer = (Component) => {
 
       return (
         <Component
+          {...this.props}
           renderPlayer={(src, id) => {
             return (
               <AudioPlayer
@@ -34,7 +35,6 @@ const withActivePlayer = (Component) => {
               />
             );
           }}
-          {...this.props}
         />
       );
     }
