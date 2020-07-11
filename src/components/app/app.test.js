@@ -3,6 +3,7 @@ import renderer from 'react-test-renderer';
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {App} from "./app.jsx";
+import NameSpace from "../../reducer/name-space.js";
 
 const mockStore = configureStore([]);
 
@@ -53,7 +54,9 @@ const questions = [
 describe(`AppSnapshots`, () => {
   it(`should render WelcomeScreen`, () => {
     const store = mockStore({
-      mistakes: 0,
+      [NameSpace.GAME]: {
+        mistakes: 0,
+      },
     });
 
     const tree = renderer.create(
@@ -75,13 +78,16 @@ describe(`AppSnapshots`, () => {
 
   it(`should render GenreQuestionScreen`, () => {
     const store = mockStore({
-      mistakes: 3,
+      [NameSpace.GAME]: {
+        mistakes: 3,
+      },
     });
 
     const tree = renderer.create(
         <Provider store={store}>
           <App
             maxMistakes={3}
+            mistakes={0}
             questions={questions}
             onAnswer={() => {}}
             resetGame={() => {}}
@@ -100,7 +106,9 @@ describe(`AppSnapshots`, () => {
 
   it(`should render ArtistQuestionScreen`, () => {
     const store = mockStore({
-      mistakes: 3,
+      [NameSpace.GAME]: {
+        mistakes: 3,
+      },
     });
 
     const tree = renderer.create(
@@ -108,6 +116,7 @@ describe(`AppSnapshots`, () => {
           <App
             maxMistakes={3}
             questions={questions}
+            mistakes={0}
             onAnswer={() => {}}
             resetGame={() => {}}
             onWelcomeButtonClick={() => {}}
@@ -125,7 +134,9 @@ describe(`AppSnapshots`, () => {
 
   it(`should render GameOverScreen`, () => {
     const store = mockStore({
-      mistakes: 3,
+      [NameSpace.GAME]: {
+        mistakes: 3,
+      },
     });
 
     const tree = renderer.create(
@@ -151,7 +162,9 @@ describe(`AppSnapshots`, () => {
 
   it(`Render WinScreen`, () => {
     const store = mockStore({
-      mistakes: 3,
+      [NameSpace.GAME]: {
+        mistakes: 3,
+      },
     });
 
     const tree = renderer.create(

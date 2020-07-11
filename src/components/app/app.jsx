@@ -1,17 +1,19 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {Switch, Route, BrowserRouter} from "react-router-dom";
+import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../reducer.js';
+import {ActionCreator} from '../../reducer/game/game.js';
 import WelcomeScreen from '../welcome-screen/welcome-screen.jsx';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
-import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import GameScreen from '../game-screen/game-screen.jsx';
-import GameOverScreen from "../game-over-screen/game-over-screen.jsx";
-import WinScreen from "../win-screen/win-screen.jsx";
+import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
+import GameOverScreen from '../game-over-screen/game-over-screen.jsx';
+import WinScreen from '../win-screen/win-screen.jsx';
 import {GameType} from '../../const.js';
 import withActivePlayer from '../../hocs/with-active-player/with-active-player.js';
-import withUserAnswer from "../../hocs/with-user-answer/with-user-answer.js";
+import withUserAnswer from '../../hocs/with-user-answer/with-user-answer.js';
+import {getStep, getMistakes, getMaxMistakes} from '../../reducer/game/selectors.js';
+import {getQuestions} from '../../reducer/data/selectors.js';
 
 const GenreQuestionScreenWrapped = withActivePlayer(withUserAnswer(GenreQuestionScreen));
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
@@ -96,24 +98,16 @@ class App extends PureComponent {
             {this._renderGameScreen()}
           </Route>
           <Route exact path="/artist">
-            <GameScreen
-              type={questions[1].type}
-            >
-              <ArtistQuestionScreenWrapped
-                question={questions[1]}
-                onAnswer={() => {}}
-              />
-            </GameScreen>
+            <ArtistQuestionScreenWrapped
+              question={questions[1]}
+              onAnswer={() => {}}
+            />
           </Route>
           <Route exact path="/genre">
-            <GameScreen
-              type={questions[0].type}
-            >
-              <GenreQuestionScreenWrapped
-                question={questions[0]}
-                onAnswer={() => {}}
-              />
-            </GameScreen>
+            <GenreQuestionScreenWrapped
+              question={questions[0]}
+              onAnswer={() => {}}
+            />
           </Route>
         </Switch>
       </BrowserRouter>
@@ -132,10 +126,10 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  step: state.step,
-  maxMistakes: state.maxMistakes,
-  mistakes: state.mistakes,
-  questions: state.questions,
+  step: getStep(state),
+  maxMistakes: getMaxMistakes(state),
+  mistakes: getMistakes(state),
+  questions: getQuestions(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
