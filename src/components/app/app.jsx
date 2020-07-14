@@ -9,11 +9,14 @@ import GameScreen from '../game-screen/game-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import GameOverScreen from '../game-over-screen/game-over-screen.jsx';
 import WinScreen from '../win-screen/win-screen.jsx';
+import AuthScreen from '../auth-screen/auth-screen.jsx';
 import {GameType} from '../../const.js';
 import withActivePlayer from '../../hocs/with-active-player/with-active-player.js';
 import withUserAnswer from '../../hocs/with-user-answer/with-user-answer.js';
 import {getStep, getMistakes, getMaxMistakes} from '../../reducer/game/selectors.js';
 import {getQuestions} from '../../reducer/data/selectors.js';
+import {getAuthorizationStatus} from '../../reducer/user/selectors.js';
+import {AuthorizationStatus, Operation as UserOperation} from '../../reducer/user/user.js';
 
 const GenreQuestionScreenWrapped = withActivePlayer(withUserAnswer(GenreQuestionScreen));
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
@@ -25,6 +28,8 @@ class App extends PureComponent {
       mistakes,
       questions,
       step,
+      authorizationStatus,
+      login,
       onAnswer,
       resetGame,
       onWelcomeButtonClick
@@ -49,13 +54,22 @@ class App extends PureComponent {
     }
 
     if (step >= questions.length) {
-      return (
-        <WinScreen
-          questionsCount={questions.length}
-          mistakesCount={mistakes}
-          onReplayButtonClick={resetGame}
-        />
-      );
+      if (authorizationStatus === AuthorizationStatus.AUTH) {
+        return (
+          <WinScreen
+            questionsCount={questions.length}
+            mistakesCount={mistakes}
+            onReplayButtonClick={resetGame}
+          />
+        );
+      } else if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+        return (
+          <AuthScreen
+            onReplayButtonClick={resetGame}
+            onFormSubmit={login}
+          />
+        );
+      }
     }
 
     if (question) {
@@ -109,6 +123,12 @@ class App extends PureComponent {
               onAnswer={() => {}}
             />
           </Route>
+          <Route exact path="/dev-auth">
+            <AuthScreen
+              onReplayButtonClick={() => {}}
+              onFormSubmit={() => {}}
+            />
+          </Route>
         </Switch>
       </BrowserRouter>
     );
@@ -120,6 +140,8 @@ App.propTypes = {
   mistakes: PropTypes.number.isRequired,
   questions: PropTypes.array.isRequired,
   step: PropTypes.number.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  login: PropTypes.func.isRequired,
   resetGame: PropTypes.func.isRequired,
   onAnswer: PropTypes.func.isRequired,
   onWelcomeButtonClick: PropTypes.func.isRequired,
@@ -130,6 +152,7 @@ const mapStateToProps = (state) => ({
   maxMistakes: getMaxMistakes(state),
   mistakes: getMistakes(state),
   questions: getQuestions(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -142,6 +165,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   resetGame() {
     dispatch(ActionCreator.resetGame());
+  },
+  login(authData) {
+    dispatch(UserOperation.login(authData));
   },
 });
 
