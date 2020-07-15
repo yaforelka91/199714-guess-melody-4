@@ -58,6 +58,9 @@ describe(`AppSnapshots`, () => {
       [NameSpace.GAME]: {
         mistakes: 0,
       },
+      [NameSpace.USER]: {
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
+      },
     });
 
     const tree = renderer.create(
@@ -172,7 +175,10 @@ describe(`AppSnapshots`, () => {
   it(`Render WinScreen`, () => {
     const store = mockStore({
       [NameSpace.GAME]: {
-        mistakes: 3,
+        mistakes: 5,
+      },
+      [NameSpace.USER]: {
+        authorizationStatus: AuthorizationStatus.AUTH,
       },
     });
 
@@ -203,6 +209,9 @@ describe(`AppSnapshots`, () => {
     const store = mockStore({
       [NameSpace.GAME]: {
         mistakes: 3,
+      },
+      [NameSpace.USER]: {
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
       },
     });
 
